@@ -35,5 +35,5 @@ document.addEventListener("click",(event)=>{
    circle.style.top=`${event.offsetY-50}px`
    circle.style.left=`${event.offsetX-50}px`
 
-   document.body.prepend(circle)
+   document.body.appendChild(circle)
 })

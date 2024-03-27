@@ -54,7 +54,7 @@ input.addEventListener("keydown", function (event) {
     if(event.key== "Enter"){
         //lấy giá trị trong ô input
         let value = input.value;
-        console.log(value)
+        //console.log(value)
 
         //Hiển thị kết quả 
         let data = products.filter(p=> p.name.toLowerCase().includes(value.toLowerCase()));
