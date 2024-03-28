@@ -29,6 +29,7 @@ const questions = [
 let currentQuestionIndex=0;
 let score=0;
 let yourAnswer=[];
+let correctAnswer=[];
 const titleQuestion = document.querySelector("#question p")
 const choices = document.querySelector(".choices")
 
@@ -53,7 +54,7 @@ const renderQuestion =(questions) =>{
 }
 renderQuestion(questions)
 
-
+const btnFinish = document.getElementById("btn-finish")
 const btnNext = document.getElementById("btn-next")
 btnNext.addEventListener("click",()=>{
     //Kiểm tra ng dùng đã chọn câu hỏi chưa
@@ -63,14 +64,38 @@ btnNext.addEventListener("click",()=>{
         return
     }
     //Lưu lại đáp án của người dùng
-    yourAnswer.push(selectedChoice.value);
-    console.log(yourAnswer)
-
+    if (selectedChoice.value===questions[currentQuestionIndex].answer) {
+        score++
+    }
+    console.log(selectedChoice.value)
+    console.log(questions[currentQuestionIndex].answer)
     //Next câu hỏi
     currentQuestionIndex++
     renderQuestion(questions)
 
-    //Khi diễn 
+    //Khi đến câu hỏi cuối thì ẩn nút Next và hiển thị nút Finish 
+    if (currentQuestionIndex==questions.length-1) {
+        btnFinish.classList.remove("hide")
+        btnNext.classList.add("hide")
+    }
+})
+
+let scored =false;
+btnFinish.addEventListener("click",()=>{
+    //Kiểm tra ng dùng đã chọn câu hỏi chưa
+    const selectedChoice = document.querySelector("input[name='choice']:checked")
+    if(!selectedChoice){
+        alert("Bạn chưa chọn câu trả lời")
+        return
+    }
+    //Lưu lại đáp án của người dùng
+    if (selectedChoice.value===questions[currentQuestionIndex].answer && scored==false) {
+        score++
+        scored=true;
+    }
+    console.log(selectedChoice.value)
+    console.log(questions[currentQuestionIndex].answer)
+    alert(`Điểm của bạn là ${score/questions.length*10} (${score}/${questions.length})`)
 })
 
 
