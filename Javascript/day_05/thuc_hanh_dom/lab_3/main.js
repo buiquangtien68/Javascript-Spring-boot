@@ -91,10 +91,10 @@ btnFinish.addEventListener("click",()=>{
     //Lưu lại đáp án của người dùng
     if (selectedChoice.value===questions[currentQuestionIndex].answer && scored==false) {
         score++
-        scored=true;
     }
-    console.log(selectedChoice.value)
-    console.log(questions[currentQuestionIndex].answer)
+    scored=true;
+    // console.log(selectedChoice.value)
+    // console.log(questions[currentQuestionIndex].answer)
     alert(`Điểm của bạn là ${score/questions.length*10} (${score}/${questions.length})`)
 })
 
