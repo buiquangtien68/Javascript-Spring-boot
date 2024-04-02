@@ -1,7 +1,18 @@
 /* 
 API là gi? Application Programming Interface
+API là một tập hợp các quy tắc và cơ chế mà theo đó, một ứng dụng hay một thành phần sẽ tương tác với một ứng dụng hay thành phần khác.
 
+HTTP Method là gì? GET, POST, PUT, DELETE (CRUD) → Các hành động các động lên tài nguyên (Resource)
 
+API Endpoint là gì? Đường dẫn URL mà chúng ta sẽ gửi request đến để lấy dữ liệu 
+GET /api/users: Lấy ds tất cả user
+PUT /api/users/:id: Cập nhật user
+POST /api/users: Tạo mới user
+DELETE /api/users/:id: Xóa user
+
+VD: GET /api/users/l/posts: Lấy ds tất cả bài viết của user có id = 1
+
+HTTP Status Code là gì? Mã trạng thái HTTP (5 đầu mã chính chủ yếu sử dụng đầu 2,4,5)
 
 */
 
