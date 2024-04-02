@@ -1,26 +1,18 @@
 //1.Hiển thị danh sách công việc ban đầu, nếu không có công việc nào trong danh sách thì hiển thị Danh sách công việc trống
-let toDoList =[
-    {
-        id: 1,
-        title: "Làm bài",
-        status: true,
-    },
-    {
-        id: 2,
-        title: "Chơi game",
-        status: false,
-    },
-    {
-        id: 3,
-        title: "Đá bóng",
-        status: false,
-    },
-    {
-        id: 4,
-        title: "Xem phim",
-        status: true,
+//Lấy danh sách toDo trên server
+let toDoList =[]
+const API_URL = "http://localhost:8000/toDo"
+const getAllToDoList = async()=>{
+    try{
+        const res = await axios.get(API_URL)
+        console.log(res)
+        toDoList=res.data;
+        renderToDoList(toDoList)
+    }catch(err){
+        console.log(err)
     }
-]
+}
+
 const ul = document.querySelector("ul")
 const renderToDoList = (toDoList)=>{
     ul.innerHTML="";
@@ -45,21 +37,14 @@ const renderToDoList = (toDoList)=>{
     })
     ul.innerHTML=html;
 }
-renderToDoList(toDoList);
 
 //2. Thêm công việc mới (nếu title rỗng -> alert “Tên công việc không được để trống”)
-const generateId =()=>{
-    if(toDoList.length===0){
-        return 1;
-    }
-    return Math.max(...toDoList.map(toDo => toDo.id))+1;
-}
 
 const inputToDo = document.getElementById("input-todo");
 console.log(inputToDo)
 const btnAdd = document.getElementById("btn-add");
 
-btnAdd.addEventListener("click",()=>{
+btnAdd.addEventListener("click",async()=>{
     //lấy nd trong ô input
     const title = inputToDo.value.trim();
 
@@ -70,33 +55,42 @@ btnAdd.addEventListener("click",()=>{
     }
     //Tạo ra to do mới
     const newToDo = {
-    id: generateId(),
     title: title,
     status: false
     }
-    //Thêm vao mảng
-    toDoList.push(newToDo);
-    //Render lại giao diện mới
 
-
-    renderToDoList(toDoList);
-    inputToDo.value=""
-    inputToDo.focus()
+    try {
+        const res = await axios.post(API_URL,newToDo)
+         //Thêm vao mảng
+        toDoList.push(res.data);
+          //Render lại giao diện mới
+        renderToDoList(toDoList);
+        inputToDo.value=""
+        inputToDo.focus()
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 //3. Xóa công việc (cần confirm trước khi xóa, sử dụng window.confirm)
-const deleteToDo = (id)=>{
+const deleteToDo = async (id)=>{
     const confirm = window.confirm("Bạn có chắc chắn muốn xóa ko")
     if(confirm){
-        toDoList=toDoList.filter(toDo => toDo.id!==id);
-        renderToDoList(toDoList)
+        try {
+            const deleteToDo = await axios.delete(`${API_URL}/${id}`)
+            toDoList=toDoList.filter(toDo => toDo.id!==id);
+            renderToDoList(toDoList)
+        } catch (error) {
+            console.log(error)
+        }
+      
     }
 }
 
 
 //4. Chỉnh sửa tiêu đề công việc (sử dụng window.prompt cho đơn giản)
 const editToDo = (id)=>{
-    toDoList.forEach(toDo =>{
+    toDoList.forEach(async(toDo) =>{
         if (toDo.id===id) {
         let title= window.prompt("Mời bạn nhập công việc khác",toDo.title)
         if( title== ""){
@@ -106,19 +100,39 @@ const editToDo = (id)=>{
         if(title==null){
             return
         }
-        toDo.title=title;
-        renderToDoList(toDoList)
+        const updatedToDo = {
+            title: title,
+            status: toDo.status
+        }
+        try {
+            const editName = await axios.put(`${API_URL}/${id}`,updatedToDo)
+            toDo.title=title;
+            renderToDoList(toDoList)
+        } catch (error) {
+            
+        }
+        
         }
     })
 }
 
 //5. Thay đổi trạng thái công việc (status)
 const toggleStatus = (id)=>{
-    toDoList.forEach(toDo =>{
+    toDoList.forEach(async (toDo) =>{
         if (toDo.id===id) {
            if(toDo.status==true){
+            const updatedToDo = {
+                title: toDo.title,
+                status: false
+            }
+            const stausFalse = await axios.put(`${API_URL}/${id}`,updatedToDo)
             toDo.status=false
            }else{
+            const updatedToDo = {
+                title: toDo.title,
+                status: true
+            }
+            const statusTrue = await axios.put(`${API_URL}/${id}`,updatedToDo)
             toDo.status=true
            }
            renderToDoList(toDoList)
@@ -126,7 +140,20 @@ const toggleStatus = (id)=>{
         }
     })
 }
+const searchToDo = document.getElementById("search-todo")
+const btnSearch = document.getElementById("btn-search")
+const ulResul =  document.getElementById("ul-result")
 
-   
+btnSearch.addEventListener("click",async ()=>{
+    const value = searchToDo.value.trim();
+    if (value==="") {
+        alert("Mời bạn nhập tên công việc")
+        return;
+    }
+    let html=``
+    
+
+})
+getAllToDoList();
 
 
