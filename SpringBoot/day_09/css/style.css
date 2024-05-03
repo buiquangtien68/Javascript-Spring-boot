@@ -9,7 +9,7 @@ img{
 }
 
 .movie-poster{
-    height: 250px;
+    height: 400px;
 }
 .movie-poster img{
     object-fit: cover;
