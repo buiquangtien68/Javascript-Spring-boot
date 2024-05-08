@@ -14,8 +14,9 @@ public class Episode {
     String name;
     @Column(nullable = false)
     String videoURL;
+
     Double duration;
-    Integer order;
+    Integer orders;
     LocalDate createdAt;
     LocalDate updatedAt;
 }

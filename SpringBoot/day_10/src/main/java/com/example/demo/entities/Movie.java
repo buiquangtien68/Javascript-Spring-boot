@@ -2,11 +2,18 @@ package com.example.demo.entities;
 
 import com.example.demo.model.enums.MovieType;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "movies")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Movie {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -18,6 +25,7 @@ public class Movie {
     String slug;
     @Column(nullable = false)
     Integer releaseYear;
+    @Column(columnDefinition = "TEXT")
     String description;
     Double rating;
     MovieType type;
