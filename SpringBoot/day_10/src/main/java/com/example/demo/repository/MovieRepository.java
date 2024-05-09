@@ -1,4 +1,4 @@
-package com.example.demo.reponsitory;
+package com.example.demo.repository;
 
 import com.example.demo.entities.Movie;
 import com.example.demo.model.enums.MovieType;
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface MovieReponsitory extends JpaRepository<Movie, Integer> {
+public interface MovieRepository extends JpaRepository<Movie, Integer> {
     //tìm kiếm
     List<Movie> findByName(String name);
     List<Movie> findByNameIgnoreCase (String name);
@@ -31,5 +31,8 @@ public interface MovieReponsitory extends JpaRepository<Movie, Integer> {
 
     //Phân trang
    Page<Movie> findByStatus(boolean status, Pageable pageable);
-   //Page<Movie> findByType (MovieType status, Pageable pageable);
+   Page<Movie> findByTypeAndStatus (MovieType type,Boolean status, Pageable pageable);
+
+   List<Movie> findByStatusOrderByRatingDesc(Boolean status);
+
 }

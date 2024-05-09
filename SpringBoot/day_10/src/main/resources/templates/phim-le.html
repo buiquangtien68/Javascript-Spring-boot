@@ -10,7 +10,7 @@
 <header class="bg-dark">
     <nav class="navbar navbar-expand-lg ">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" th:href="@{/}">
                 <img src="https://motchilltv.ac/_ipx/s_150x35/logo.png" alt="logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,10 +18,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active text-white" href="#">Trang chủ</a>
-                    <a class="nav-link text-white" href="#">Phim bộ</a>
-                    <a class="nav-link text-white" href="#">Phim lẻ</a>
-                    <a class="nav-link disabled text-white" aria-disabled="true">Phim chiếu rạp</a>
+                    <a class="nav-link active text-white" th:href="@{/}">Trang chủ</a>
+                    <a class="nav-link text-white" th:href="@{/phim-bo}">Phim bộ</a>
+                    <a class="nav-link text-white" th:href="@{/phim-le}">Phim lẻ</a>
+                    <a class="nav-link text-white" th:href="@{/phim-chieu-rap}">Phim chiếu rạp</a>
+                    <a class="nav-link  text-white"  th:href="@{/tin-tuc}">Tin tức</a>
                 </div>
             </div>
         </div>
@@ -34,7 +35,7 @@
             <h3>Danh sách phim lẻ</h3>
         </div>
         <div class="row">
-            <div class="col-2" th:each="movie :${movies}">
+            <div class="col-2" th:each="movie :${pageData.getContent()}">
                 <div class="movie-item">
                     <div class="movie-poster overflow-hidden">
                         <img class="w-100 h-100 rounded " th:src="${movie.poster}" alt="movie-poster">
@@ -46,17 +47,16 @@
 
         <div class="d-flex justify-content-center mt-4 ">
             <nav aria-label="...">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link">Previous</a>
+                <ul class="pagination" th:if="${pageData.getTotalPages()!=1}">
+                    <li class="page-item " th:classappend="${currentPage==1 ? 'disabled' : ''}">
+                        <a class="page-link"  th:href="@{/phim-le (page=${currentPage-1})}">Previous</a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="#">2</a>
+                    <li class="page-item" th:each="number: ${#numbers.sequence(1, pageData.getTotalPages())}" th:classappend="${currentPage==number ? 'active' :''}">
+                        <a class="page-link" th:href="@{/phim-le (page=${number})}" th:text="${number}">1</a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
+
+                    <li class="page-item" th:classappend="${currentPage==pageData.getTotalPages()? 'disabled':''}">
+                        <a class="page-link" th:href="@{/phim-le (page=${currentPage+1})}">Next</a>
                     </li>
                 </ul>
             </nav>

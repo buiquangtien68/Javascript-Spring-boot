@@ -2,9 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Phim bộ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách blog</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <header class="bg-dark">
@@ -30,41 +31,38 @@
 </header>
 
 <section class="py-4">
-    <div class="container">
+    <div class="container ">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <h3>Danh sách phim bộ</h3>
+            <h3>Tin tức</h3>
         </div>
+
         <div class="row">
-            <div class="col-2" th:each="movie :${pageData.getContent()}">
-                <div class="movie-item">
-                    <div class="movie-poster overflow-hidden">
-                        <img class="w-100 h-100 rounded " th:src="${movie.poster}" alt="movie-poster">
-                    </div>
-                    <p class="mt-2" th:text="${movie.name}"></p>
+            <div class="col-6 mt-2" th:each="blog :${pageData.getContent()}">
+                <div class="bg-body-tertiary p-4 rounded" style="height: 200px;">
+                    <a th:href="@{/tin-tuc/{id}/{slug}(id=${blog.getId()}, slug=${blog.getSlug()})}" ><h5 th:text="${blog.getTitle}">Top 10 Bộ Phim Cổ Trang Hoa Ngữ Sắp Chiếu Năm 2024</h5></a>
+                    <p th:text="${blog.getCreatedAt}">Jan 23, 2024</p>
+                    <p class="mb-0" th:text="${blog.getDescription}">Phim hoa ngữ năm 2024 với nhiều bom tấn hứa hẹn sẽ gây bão trên màn ảnh Hoa Ngữ vậy cùng điểm 10 bộ phim hoa ngữ sắp ra mắt năm 2024. ...</p>
                 </div>
             </div>
         </div>
-
         <div class="d-flex justify-content-center mt-4 ">
             <nav aria-label="...">
                 <ul class="pagination" th:if="${pageData.getTotalPages()!=1}">
                     <li class="page-item " th:classappend="${currentPage==1 ? 'disabled' : ''}">
-                        <a class="page-link"  th:href="@{/phim-bo (page=${currentPage-1})}">Previous</a>
+                        <a class="page-link"  th:href="@{/tin-tuc (page=${currentPage-1})}">Previous</a>
                     </li>
                     <li class="page-item" th:each="number: ${#numbers.sequence(1, pageData.getTotalPages())}" th:classappend="${currentPage==number ? 'active' :''}">
-                        <a class="page-link" th:href="@{/phim-bo (page=${number})}" th:text="${number}">1</a>
+                        <a class="page-link" th:href="@{/tin-tuc (page=${number})}" th:text="${number}">1</a>
                     </li>
 
                     <li class="page-item" th:classappend="${currentPage==pageData.getTotalPages()? 'disabled':''}">
-                        <a class="page-link" th:href="@{/phim-bo (page=${currentPage+1})}">Next</a>
+                        <a class="page-link" th:href="@{/tin-tuc (page=${currentPage+1})}">Next</a>
                     </li>
                 </ul>
             </nav>
         </div>
     </div>
 </section>
-
-
 
 <footer class="bg-dark py-4">
     <div class="container">
