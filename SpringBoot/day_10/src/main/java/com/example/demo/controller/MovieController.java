@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -65,6 +66,9 @@ public class MovieController {
 
     @GetMapping("/phim/{id}/{slug}")
     public String phim(@PathVariable int id, @PathVariable String slug, Model model) {
+       model.addAttribute("movie",movieService.getMovieByIdAndSlugAndStatus(id,slug,true));
+        List<MovieType> movieTypes = Arrays.asList(MovieType.values());
+        model.addAttribute("movieTypes", movieTypes);
        return "chi-tiet-phim";
     }
 

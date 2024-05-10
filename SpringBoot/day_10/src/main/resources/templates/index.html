@@ -39,9 +39,13 @@
             <div class="col-3" th:each="movie : ${ListPhimHot}">
                 <div class="movie-item">
                     <div class="movie-poster overflow-hidden">
-                        <img class="w-100 h-100 rounded " th:src="${movie.getPoster()}" alt="movie-poster">
+                        <a th:href="@{/phim/{id}/{slug}(id=${movie.getId()}, slug=${movie.getSlug()})}">
+                            <img class="w-100 h-100 rounded " th:src="${movie.getPoster()}" alt="movie-poster">
+                        </a>
                     </div>
-                    <p class="mt-2" th:text="${movie.getName()}">Queen of tears</p>
+                    <a style="text-decoration: none; color: black" th:href="@{/phim/{id}/{slug}(id=${movie.getId()}, slug=${movie.getSlug()})}">
+                        <p class="mt-2" th:text="${movie.getName()}">Queen of tears</p>
+                    </a>
                 </div>
             </div>
 
@@ -59,9 +63,13 @@
             <div class="col-2" th:each="movie :${ListPhimBo}">
                 <div class="movie-item">
                     <div class="movie-poster overflow-hidden">
-                        <img class="w-100 h-100 rounded " th:src="${movie.getPoster()}" alt="movie-poster">
+                        <a th:href="@{/phim/{id}/{slug}(id=${movie.getId()}, slug=${movie.getSlug()})}">
+                            <img class="w-100 h-100 rounded " th:src="${movie.getPoster()}" alt="movie-poster">
+                        </a>
                     </div>
-                    <p class="mt-2" th:text="${movie.getName()}"></p>
+                    <a style="text-decoration: none; color: black" th:href="@{/phim/{id}/{slug}(id=${movie.getId()}, slug=${movie.getSlug()})}">
+                        <p class="mt-2" th:text="${movie.getName()}"></p>
+                    </a>
                 </div>
             </div>
         </div>
@@ -78,9 +86,13 @@
             <div class="col-2" th:each="movie :${ListPhimLe}">
                 <div class="movie-item">
                     <div class="movie-poster overflow-hidden">
-                        <img class="w-100 h-100 rounded " th:src="${movie.getPoster()}" alt="movie-poster">
+                        <a th:href="@{/phim/{id}/{slug}(id=${movie.getId()}, slug=${movie.getSlug()})}">
+                            <img class="w-100 h-100 rounded " th:src="${movie.getPoster()}" alt="movie-poster">
+                        </a>
                     </div>
-                    <p class="mt-2" th:text="${movie.getName()}"></p>
+                    <a style="text-decoration: none; color: black" th:href="@{/phim/{id}/{slug}(id=${movie.getId()}, slug=${movie.getSlug()})}">
+                        <p class="mt-2" th:text="${movie.getName()}"></p>
+                    </a>
                 </div>
             </div>
         </div>
@@ -97,9 +109,13 @@
             <div class="col-2" th:each="movie :${ListPhimChieuRap}">
                 <div class="movie-item">
                     <div class="movie-poster overflow-hidden">
-                        <img class="w-100 h-100 rounded " th:src="${movie.getPoster()}" alt="movie-poster">
+                        <a th:href="@{/phim/{id}/{slug}(id=${movie.getId()}, slug=${movie.getSlug()})}">
+                            <img class="w-100 h-100 rounded " th:src="${movie.getPoster()}" alt="movie-poster">
+                        </a>
                     </div>
-                    <p class="mt-2" th:text="${movie.getName()}"></p>
+                    <a style="text-decoration: none; color: black" th:href="@{/phim/{id}/{slug}(id=${movie.getId()}, slug=${movie.getSlug()})}">
+                        <p class="mt-2" th:text="${movie.getName()}"></p>
+                    </a>
                 </div>
             </div>
         </div>

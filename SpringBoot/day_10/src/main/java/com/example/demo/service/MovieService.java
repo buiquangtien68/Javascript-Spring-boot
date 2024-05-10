@@ -27,4 +27,7 @@ public class MovieService {
     public List<Movie> findByStatus(Boolean status) {
         return movieRepository.findByStatusOrderByRatingDesc(status).stream().limit(4).toList();
     }
+    public Movie getMovieByIdAndSlugAndStatus (Integer id, String slug, Boolean status) {
+        return movieRepository.findByIdAndSlugAndStatus(id,slug,status);
+    }
 }
