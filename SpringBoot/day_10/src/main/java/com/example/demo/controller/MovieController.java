@@ -1,10 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.entities.Blog;
+import com.example.demo.entities.Genre;
 import com.example.demo.entities.Movie;
 import com.example.demo.model.enums.MovieType;
 import com.example.demo.service.BlogService;
+import com.example.demo.service.EpisodeService;
 import com.example.demo.service.MovieService;
+import com.example.demo.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Controller
 public class MovieController {
@@ -23,6 +28,10 @@ public class MovieController {
     MovieService movieService;
     @Autowired
     BlogService blogService;
+    @Autowired
+    EpisodeService episodeService;
+    @Autowired
+    ReviewService reviewService;
 
 
    @GetMapping("/")
@@ -66,9 +75,18 @@ public class MovieController {
 
     @GetMapping("/phim/{id}/{slug}")
     public String phim(@PathVariable int id, @PathVariable String slug, Model model) {
-       model.addAttribute("movie",movieService.getMovieByIdAndSlugAndStatus(id,slug,true));
+       Random random = new Random();
+        model.addAttribute("movie",movieService.getMovieByIdAndSlugAndStatus(id,slug,true));
         List<MovieType> movieTypes = Arrays.asList(MovieType.values());
         model.addAttribute("movieTypes", movieTypes);
+        model.addAttribute("episodes",episodeService.findByMovie_IdOrderByOrdersAsc(id));
+        model.addAttribute("reviews",reviewService.findByMovie_IdOrderByCreatedAtDesc(id));
+        Optional<Movie> movie = movieService.getMovieById(id);
+        if(movie.isPresent()) {
+            List<Genre> genres =movie.get().getGenres();
+            String rdGenre = genres.get(random.nextInt(genres.size())).getName();
+            model.addAttribute("ListPhimDeCu",movieService.findByGenreNameOrderByRatingDescExcludingMovieId(rdGenre,id));
+        }
        return "chi-tiet-phim";
     }
 

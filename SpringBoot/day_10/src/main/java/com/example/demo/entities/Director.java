@@ -1,7 +1,14 @@
 package com.example.demo.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "directors")
 public class Director {
@@ -11,4 +18,6 @@ public class Director {
     @Column(nullable = false)
     String name;
     String avatar;
+    @Column(columnDefinition = "TEXT")
+    String bio;
 }

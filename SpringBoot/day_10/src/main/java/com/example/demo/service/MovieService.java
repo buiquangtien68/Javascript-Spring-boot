@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieService {
@@ -29,5 +30,12 @@ public class MovieService {
     }
     public Movie getMovieByIdAndSlugAndStatus (Integer id, String slug, Boolean status) {
         return movieRepository.findByIdAndSlugAndStatus(id,slug,status);
+    }
+    public List<Movie> findByGenreNameOrderByRatingDescExcludingMovieId(String genreName, Integer excludedMovieId) {
+        return movieRepository.findByGenreNameOrderByRatingDescExcludingMovieId(genreName,excludedMovieId).stream().limit(8).toList();
+    }
+
+    public Optional<Movie> getMovieById(Integer id) {
+        return movieRepository.findById(id);
     }
 }

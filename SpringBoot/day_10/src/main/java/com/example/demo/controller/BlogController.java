@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entities.Blog;
 import com.example.demo.service.BlogService;
+import com.example.demo.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BlogController {
     @Autowired
     BlogService blogService;
+    @Autowired
+    CommentService commentService;
+
     @GetMapping("/tin-tuc")
     public String tinTuc(Model model, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false,defaultValue = "4") int pageSize) {
         Page<Blog> pageData = blogService.getBlogByStatus(true,page,pageSize);
@@ -25,6 +29,7 @@ public class BlogController {
     @GetMapping("/tin-tuc/{id}/{slug}")
     public String chiTietBlog(@PathVariable int id, @PathVariable String slug, Model model) {
         model.addAttribute("blog",blogService.getBlogByIdAndSlugAndStatus(id,slug,true));
+        model.addAttribute("comments",commentService.findByBlog_IdOrderByCreatedAtDesc(id));
         return "chi-tiet-blog";
     }
 }
